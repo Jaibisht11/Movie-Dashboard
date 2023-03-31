@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <link href = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-triton/resources/theme-triton-all.css" 
+    rel = "stylesheet" />
+    
+      <script type = "text/javascript" 
+         src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
+      
+      <script type = "text/javascript">
+          Ext.onReady(function () {
+           var formAdd= new Ext.create('Ext.form.Panel', {
+               renderTo: Ext.getBody(),
+               bodyPadding: 5,
+               width: 'fit',
+               height : 200,
+               border : true,
+               frame : true,
+               layout: 'auto',
+               buttonAlign:'center', 
+               title:  'Movie Advanced Search', // auto is one of the layout type.
+               items: [
+                 {
+                  xtype: 'textfield',
+                    name: 'Movie Name',
+                    fieldLabel: 'Movie Name',
+                    allowBlank: false
+                 },
+                 {
+                  xtype: 'textfield',
+                    name: 'Director Name',
+                    fieldLabel: 'Director Name',
+                    allowBlank: false, 
+                    margin:'-25 10 10 450'
+                 },
+                 {
+                  xtype: 'datefield',
+                fieldLabel: 'Release Year',
+                margin:'0 0 0 0'
+                 },
+                 {
+                  xtype: 'combo',
+                    fieldLabel: 'Language',
+                    hiddenName: 'rating',
+                    store: new Ext.data.SimpleStore({
+                        data: [
+                           [1,"English"],
+                           [2,"Spanish"],
+                           [3,"Hindi"],
+                           [4,"Tamil"],
+                           [5,"Telugu"]
+        
+                        ],
+                        id: 0,
+                        fields: ['value', 'text']
+                 }),
+                 valueField: 'value',
+                    displayField: 'text',
+                    triggerAction: 'all',
+                    editable: false,
+                    margin:'-20 10 10 450'
+                },
+                          
+               ],
+               buttons: [{
+        text: 'Reset',
+        handler: function() {
+            this.up('form').getForm().reset();
+        }
+    }, {
+        text: 'Search',
+        formBind: true, //only enabled once the form is valid
+        disabled: true,
+        handler: function() {
+            var form = this.up('form').getForm();
+            if (form.isValid()) {
+                form.submit({
+                    success: function(form, action) {
+                       Ext.Msg.alert('Success', action.result.msg);
+                    },
+                    failure: function(form, action) {
+                        Ext.Msg.alert('Failed', action.result.msg);
+                    }
+                });
+            }
+        }
+    }],
+    renderTo: Ext.getBody()               
+   }); 
+ });       
+      </script>
+   </head>
+   
+   <body>
+
+   </body>
+</html>
+            
